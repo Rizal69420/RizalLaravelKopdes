@@ -1,0 +1,44 @@
+guru-manager:
+foto_manager
+nama_manager
+tanggal_lahir
+jenis_kelamin
+alamat_manager
+pendidikan_terakhir
+
+mapel-kopdes
+Progress: Save button shenanigans
+
+fotoklub = foto_manager
+imagepreview = fotoManagerPreview
+previewimage = PreviewManagerImage
+removeimage = removeManagerImage
+
+
+                    <script>
+                        document.querySelector('input[name="foto_kopdes"]').addEventListener('change', function(event) {
+                            const input = event.target;
+                            const previewImage = document.getElementById('previewImage');
+                            if (input.files && input.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function(e) {
+                                    previewImage.src = e.target.result;
+                                    previewImage.style.display = 'block';
+                                }
+                                reader.readAsDataURL(input.files[0]);
+                            } else {
+                                previewImage.src = '#';
+                                previewImage.style.display = 'none';
+                            }
+                        });
+                    </script>
+
+
+
+
+		'foto_manager' => ,
+                'nama_manager' => ,
+                'tanggal_lahir' =>  ,
+                'jenis_kelamin' => ,
+                'alamat_manager' => ,
+                'pendidikan_terakhir' => ,

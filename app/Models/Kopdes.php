@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Kopdes extends Model
+{
+    use HasFactory;
+
+    protected $table = 'kopdes';
+
+    protected $fillable = [
+        'foto_kopdes',
+        'nama_kopdes',
+        'alamat_kopdes',
+        'tgl_berdiri',
+        'nama_manager',
+        'foto_manager',
+    ];
+
+    public function manager(): BelongsTo
+    {
+        return $this->belongsTo(Manager::class, 'nama_manager', 'nama_manager');
+    }
+}
