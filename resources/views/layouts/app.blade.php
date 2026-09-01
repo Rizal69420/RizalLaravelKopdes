@@ -23,7 +23,7 @@
     <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">
-                <i class="bi bi-mortarboard-fill me-1"></i>Daftar Kopdes
+                <i class="bi bi-mortarboard-fill me-1"></i>Daftar Kopdes & Manager
             </a>
 
             <div class="navbar-nav">

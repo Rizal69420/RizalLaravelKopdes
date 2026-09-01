@@ -17,7 +17,7 @@
                     <tr>
                         <th>Foto</th>
                         <th>Nama</th>
-                        <th>tanggal Lahir</th>
+                        <th>Tanggal Lahir</th>
                         <th>Jenis Kelamin</th>
                         <th>Alamat</th>
                         <th>Pendidikan Terakhir</th>
@@ -25,52 +25,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($managers as $index => $m)
-                    <tr>
-                        <td class="ps-4 text-muted">{{ $index + 1 }}</td>
-                        <td>
-                            <span class="badge bg-secondary-subtle text-dark border">{{ $m->nip }}</span>
-                        </td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <div class="avatar-sm bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:34px; height:34px; font-size:13px; font-weight:bold;">
-                                    {{ strtoupper(substr($m->nama_manager, 0, 1)) }}
-                                </div>
-                                <span class="fw-semibold">{{ $m->nama_manager }}</span>
-                            </div>
-                        </td>
-                        <td>{{ $m->tanggal_lahir }}</td>
-                        <td>
-                            @if($m->jenis_kelamin == 'Pria')
-                                <span class="badge bg-primary-subtle text-primary"><i class="bi bi-gender-male me-1"></i>Pria</span>
-                            @else
-                                <span class="badge bg-danger-subtle text-danger"><i class="bi bi-gender-female me-1"></i>Wanita</span>
-                            @endif
-                        </td>
-                        <td><span class="badge bg-info-subtle text-info-emphasis">{{ $m->pendidikan_terakhir }}</span></td>
-                        <td class="text-muted small" style="max-width: 200px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-                            {{ $m->alamat }}
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('manager.edit', $m->id) }}" class="btn btn-outline-warning btn-sm me-1" title="Edit">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <form action="{{ route('manager.destroy', $m->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data manager ini?')" title="Hapus">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                    @forelse ($managers as $manager)
+                        <tr>
+                            <td>
+                                @if ($manager->foto_manager)
+                                    <img src="{{ asset('storage/app/public/managers/' . $manager->foto_manager) }}" alt="Foto Manager" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                @else
+                                    <span class="text-muted">Tidak ada foto</span>
+                                @endif
+                            </td>
+                            <td>{{ $manager->nama_manager }}</td>
+                            <td>{{ \Carbon\Carbon::parse($manager->tanggal_lahir)->format('d-m-Y') }}</td>
+                            <td>{{ $manager->jenis_kelamin }}</td>
+                            <td>{{ $manager->alamat }}</td>
+                            <td>{{ $manager->pendidikan_terakhir }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('manager.edit', $manager->id) }}" class="btn btn-sm btn-warning me-1">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <form action="{{ route('manager.destroy', $manager->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus manager ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="7" class="text-center py-4 text-muted">
-                            <i class="bi bi-inbox fs-3 d-block mb-2 text-secondary"></i>
-                            Belum ada data manager.
-                        </td>
-                    </tr>
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Tidak ada data manager.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>

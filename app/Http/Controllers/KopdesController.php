@@ -21,13 +21,12 @@ class KopdesController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'foto_kopdes'           => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_kopdes'           => 'required|string|max:255',
             'alamat_kopdes'         => 'required|string',
             'tgl_berdiri'           => 'required|date',
-            'nama_manager'          => 'required|string|max:255',
-            'foto_manager'          => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'manager_id'            => 'required|exists:manager,id',
         ]);
 
         $fotoKopdes = null;
@@ -35,7 +34,7 @@ class KopdesController extends Controller
             $fotoKopdes = $request->file('foto_kopdes')->store('public/foto_kopdes');
         }
 
-        Kopdes::create(array_merge($request->all(), ['foto_kopdes' => $fotoKopdes]));
+        Kopdes::create(array_merge($validated, ['foto_kopdes' => $fotoKopdes]));
 
         return redirect()->route('kopdes.index')->with('success', 'Data Kopdes berhasil disimpan!');
     }
@@ -48,13 +47,12 @@ class KopdesController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'foto_kopdes'           => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_kopdes'           => 'required|string|max:255',
             'alamat_kopdes'         => 'required|string',
             'tgl_berdiri'           => 'required|date',
-            'nama_manager'          => 'required|string|max:255',
-            'foto_manager'          => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'manager_id'            => 'required|exists:managers,id',
         ]);
 
         // Handle file upload if a new file is provided

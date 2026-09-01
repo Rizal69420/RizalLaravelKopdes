@@ -17,12 +17,11 @@ class Kopdes extends Model
         'nama_kopdes',
         'alamat_kopdes',
         'tgl_berdiri',
-        'nama_manager',
-        'foto_manager',
+        'manager_id',
     ];
 
     public function manager(): BelongsTo
     {
-        return $this->belongsTo(Manager::class, 'nama_manager', 'nama_manager');
+        return $this->belongsTo(Manager::class, 'manager_id', 'id');
     }
 }

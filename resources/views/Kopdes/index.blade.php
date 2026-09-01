@@ -15,59 +15,56 @@
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th class="ps-4">No</th>
-                        <th>Kode</th>
+                        <th>Foto Kopdes</th>
                         <th>Nama Kopdes</th>
-                        <th>Alamat</th>
+                        <th>Alamat Kopdes</th>
                         <th>Tanggal Berdiri</th>
-                        <th>Manager</th>
+                        <th>Foto Manager</th>
+                        <th>Nama Manager</th>
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($kopdes as $index => $k)
-                    <tr>
-                        <td class="ps-4 text-muted">{{ $index + 1 }}</td>
-                        <td><span class="badge bg-secondary-subtle text-dark border">{{ $k->kode_kopdes }}</span></td>
-                        <td class="fw-semibold">{{ $k->nama_kopdes }}</td>
-                        <td>{{ $k->alamat_kopdes }}</td>
-                        <td>{{ $k->tgl_berdiri }}</td>
-                        <td>
-                            @if($k->manager)
-                                <div class="d-flex align-items-center">
-                                    <div class="avatar-sm bg-primary text-white rounded-circle me-2 d-flex align-items-center justify-content-center" style="width:32px; height:32px; font-size:12px;">
-                                        {{ strtoupper(substr($k->manager->nama_manager, 0, 1)) }}
-                                    </div>
-                                    <div>
-                                        <div class="fw-bold">{{ $k->manager->nama_manager }}</div>
-                                        <small class="text-muted">NIP: {{ $k->manager->nip }}</small>
-                                    </div>
-                                </div>
-                            @else
-                                <span class="badge bg-warning-subtle text-warning-emphasis">Belum Ditentukan</span>
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('kopdes.edit', $k->id) }}" class="btn btn-outline-warning btn-sm me-1" title="Edit">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                            <form action="{{ route('kopdes.destroy', $k->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus kopdes ini?')" title="Hapus">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
+                    @forelse ($kopdes as $item)
+                        <tr>
+                            <td>
+                                @if ($item->foto_kopdes)
+                                    <img src="{{ asset('storage/app/public/foto_kopdes/' . $item->foto_kopdes) }}" alt="Foto Kopdes" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                @else
+                                    <span class="text-muted">Tidak ada foto</span>
+                                @endif
+                            </td>
+                            <td>{{ $item->nama_kopdes }}</td>
+                            <td>{{ $item->alamat_kopdes }}</td>
+                            <td>{{ \Carbon\Carbon::parse($item->tgl_berdiri)->format('d-m-Y') }}</td>
+                            <td>
+                                @if ($item->manager && $item->manager->foto_manager)
+                                    <img src="{{ asset('storage/app/public/managers/' . $item->manager->foto_manager) }}" alt="Foto Manager" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                @else
+                                    <span class="text-muted">Tidak ada foto</span>
+                                @endif
+                            </td>
+                            <td>{{ $item->manager ? $item->manager->nama_manager : 'Tidak ada manager' }}</td>
+                            <td class="text-center">
+                                <a href="{{ route('kopdes.edit', $item->id) }}" class="btn btn-sm btn-warning me-1">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <form action="{{ route('kopdes.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kopdes ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="bi bi-trash"></i> Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
                     @empty
-                    <tr>
-                        <td colspan="6" class="text-center py-4 text-muted">Belum ada data kopdes.</td>
-                    </tr>
+                        <tr>
+                            <td colspan="7" class="text-center text-muted">Tidak ada data kopdes.</td>
+                        </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-</div>
 @endsection
