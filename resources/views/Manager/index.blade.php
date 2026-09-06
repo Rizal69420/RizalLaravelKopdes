@@ -29,15 +29,22 @@
                         <tr>
                             <td>
                                 @if ($manager->foto_manager)
-                                    <img src="{{ asset('storage/app/public/managers/' . $manager->foto_manager) }}" alt="Foto Manager" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                    <img
+                                        src="{{ asset('storage/' . $manager->foto_manager) }}"
+                                        alt="{{ $manager->nama_manager }}"
+                                        class="club-image"
+                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
+                                        >
                                 @else
-                                    <span class="text-muted">Tidak ada foto</span>
+                                    <div class="no-image">
+                                        Tidak ada foto
+                                    </div>
                                 @endif
                             </td>
                             <td>{{ $manager->nama_manager }}</td>
                             <td>{{ \Carbon\Carbon::parse($manager->tanggal_lahir)->format('d-m-Y') }}</td>
                             <td>{{ $manager->jenis_kelamin }}</td>
-                            <td>{{ $manager->alamat }}</td>
+                            <td>{{ $manager->alamat_manager }}</td>
                             <td>{{ $manager->pendidikan_terakhir }}</td>
                             <td class="text-center">
                                 <a href="{{ route('manager.edit', $manager->id) }}" class="btn btn-sm btn-warning me-1">

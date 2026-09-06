@@ -28,10 +28,17 @@
                     @forelse ($kopdes as $item)
                         <tr>
                             <td>
-                                @if ($item->foto_kopdes)
-                                    <img src="{{ asset('storage/app/public/foto_kopdes/' . $item->foto_kopdes) }}" alt="Foto Kopdes" class="img-thumbnail" style="width: 50px; height: 50px;">
+                               @if ($item->foto_kopdes)
+                                <img
+                                    src="{{ asset('storage/' . $item->foto_kopdes) }}"
+                                    alt="{{ $item->nama_kopdes }}"
+                                    class="club-image"
+                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
+                                    >
                                 @else
-                                    <span class="text-muted">Tidak ada foto</span>
+                                    <div class="no-image">
+                                        Tidak ada foto
+                                    </div>
                                 @endif
                             </td>
                             <td>{{ $item->nama_kopdes }}</td>
@@ -39,9 +46,15 @@
                             <td>{{ \Carbon\Carbon::parse($item->tgl_berdiri)->format('d-m-Y') }}</td>
                             <td>
                                 @if ($item->manager && $item->manager->foto_manager)
-                                    <img src="{{ asset('storage/app/public/managers/' . $item->manager->foto_manager) }}" alt="Foto Manager" class="img-thumbnail" style="width: 50px; height: 50px;">
+                                    <img
+                                        src="{{ asset('storage/' . $item->manager->foto_manager) }}"
+                                        alt="{{ $item->manager->nama_manager }}"
+                                        class="club-image"
+                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
                                 @else
-                                    <span class="text-muted">Tidak ada foto</span>
+                                    <div class="no-image">
+                                        Tidak ada foto
+                                     </div>
                                 @endif
                             </td>
                             <td>{{ $item->manager ? $item->manager->nama_manager : 'Tidak ada manager' }}</td>

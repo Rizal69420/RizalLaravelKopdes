@@ -31,10 +31,9 @@ class KopdesController extends Controller
 
         $fotoKopdes = null;
         if ($request->hasFile('foto_kopdes')) {
-            $fotoKopdes = $request->file('foto_kopdes')->store('public/foto_kopdes');
+            $validated['foto_kopdes'] = $request->file('foto_kopdes')->store('kopdes', 'public');
         }
-
-        Kopdes::create(array_merge($validated, ['foto_kopdes' => $fotoKopdes]));
+        Kopdes::create($validated);
 
         return redirect()->route('kopdes.index')->with('success', 'Data Kopdes berhasil disimpan!');
     }
@@ -55,17 +54,18 @@ class KopdesController extends Controller
             'manager_id'            => 'required|exists:managers,id',
         ]);
 
-        // Handle file upload if a new file is provided
+         // Handle file upload if a new file is provided
         if ($request->hasFile('foto_kopdes')) {
             // Delete the old file if it exists
             if ($kopdes->foto_kopdes) {
-                Storage::delete($kopdes->foto_kopdes);
+                Storage::disk('public')->delete($kopdes->foto_kopdes);
             }
-            $fotoKopdes = $request->file('foto_kopdes')->store('public/foto_kopdes');
+            $validated['foto_kopdes'] = $request->file('foto_kopdes')->store('kopdes', 'public');
+        } else {
+            // If no new file is provided, keep the old file path
+            unset($validated['foto_kopdes']);
         }
-
-        $kopdes = Kopdes::findOrFail($id);
-        $kopdes->update(array_merge($request->all(), ['foto_kopdes' => $fotoKopdes]));
+        $kopdes->update($validated);
 
         return redirect()->route('kopdes.index')->with('success', 'Data Kopdes berhasil diperbarui!');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Manager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ManagerController extends Controller
 {
@@ -33,7 +34,7 @@ class ManagerController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
+        $validated = $request->validate([
             'foto_manager'          => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_manager'          => 'required|string|max:255',
             'tanggal_lahir'         => 'required|date',
@@ -42,19 +43,17 @@ class ManagerController extends Controller
             'pendidikan_terakhir'   => 'required|string|max:255',
         ]);
 
-        $fotoManager = null;
         if ($request->hasFile('foto_manager')) {
-            $fotoManager = $request->file('foto_manager')->store('public/foto_manager');
+            $validated['foto_manager'] = $request->file('foto_manager')->store('managers', 'public');
         }
-
-        Manager::create(array_merge($request->all(), ['foto_manager' => $fotoManager]));
+        Manager::create($validated);
 
         return redirect()->route('manager.index')->with('success', 'Data Manager berhasil disimpan!');
     }
     public function show(string $id)
     {
         //
-        $manager = Manager::with('guru')->findOrFail($id);
+        $manager = Manager::with('managers')->findOrFail($id);
         return view('manager.show', compact('manager'));
     }
     public function edit(string $id)
@@ -68,7 +67,7 @@ class ManagerController extends Controller
         //
         $manager = Manager::findOrFail($id);
 
-        $request->validate([
+        $validated = $request->validate([
             'foto_manager'          => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_manager'          => 'required|string|max:255',
             'tanggal_lahir'         => 'required|date',
@@ -81,12 +80,15 @@ class ManagerController extends Controller
         if ($request->hasFile('foto_manager')) {
             // Delete the old file if it exists
             if ($manager->foto_manager) {
-                Storage::delete($manager->foto_manager);
+                Storage::disk('public')->delete($manager->foto_manager);
             }
-            $fotoManager = $request->file('foto_manager')->store('public/foto_manager');
+            $validated['foto_manager'] = $request->file('foto_manager')->store('managers', 'public');
+        } else {
+            // If no new file is provided, keep the old file path
+            unset($validated['foto_manager']);
         }
 
-        $manager->update(array_merge($request->all(), ['foto_manager' => $fotoManager]));
+        $manager->update($validated);
 
         return redirect()->route('manager.index')->with('success', 'Data Manager berhasil diperbarui!');
     }
@@ -96,7 +98,7 @@ class ManagerController extends Controller
         $manager = Manager::findOrFail($id);
 
         if ($manager->foto_manager) {
-            Storage::delete($manager->foto_manager);
+            Storage::disk('public')->delete($manager->foto_manager);
         }
 
         $manager->delete();

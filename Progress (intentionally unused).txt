@@ -6,8 +6,13 @@ jenis_kelamin
 alamat_manager
 pendidikan_terakhir
 
-mapel-kopdes
-Progress: Save button shenanigans
+mapel-kopdes:
+foto_kopdes
+nama_kopdes
+alamat_kopdes
+tgl_berdiri
+manager_id
+Progress: aighty those are fixed now lol
 
 fotoklub = foto_manager
 imagepreview = fotoManagerPreview

@@ -83,7 +83,7 @@
                     </div>
 
                     {{-- Foto Manager --}}
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label class="form-label fw-semibold">Foto Manager <span class="text-danger">*</span></label>
                         <input type="file"
                                name="foto_manager"
@@ -101,7 +101,7 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="d-flex justify-content-end">
                         <a href="{{ route('kopdes.index') }}" class="btn btn-secondary me-2">Batal</a>
@@ -120,7 +120,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>  
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
