@@ -1,106 +1,124 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Data Manager')
+@section('title', 'Edit Manager')
 
 @section('content')
-<div class="row justify-content-center">
+<div class="row justify-content-creator">
     <div class="col-md-8">
         <div class="card shadow-sm">
-            <div class="card-header bg-white py-3">
-                <h5 class="mb-0 fw-bold text-warning"><i class="bi bi-pencil-square me-2"></i>Edit Data Manager</h5>
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold text-primary"><i class="bi bi-pencil-square me-2"></i>Edit Manager</h5>
             </div>
-            <div class="card-body p-4">
+            <div class="card-body">
                 <form action="{{ route('manager.update', $manager->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
-                    
-                    <div class="row">
-                        <!-- Foto Manager -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">Foto Manager <span class="text-danger">*</span></label>
-                            <input type="file" 
-                                   name="foto_manager" 
-                                   class="form-control @error('foto_manager') is-invalid @enderror"
-                                   value="{{ old('foto_manager', $manager->foto_manager) }}"
-                                   accept="image/*">
-                            @error('foto_manager')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                            <div id="fotoManagerPreview" class="mt-3" style="display: none;">
-                            <img id="previewManagerImage" src="#" alt="Preview Foto Manager" class="img-fluid rounded mb-2" style="max-height: 200px;">
-                            <div>
-                                <button type="button" id="removeManagerImage" class="btn btn-danger btn-sm">
-                                    <i class="bi bi-x-circle me-1"></i> Hapus Foto Manager
-                                </button>
+                    {{-- Foto Manager --}}
+                    <div class="mb-3">
+                        <label for="foto_manager" class="form-label">Foto Manager</label>
+                        <input type="file" class="form-control @error('foto_manager') is-invalid @enderror" 
+                            id="foto_manager" name="foto_manager" accept="image/*">
+                        @error('foto_manager')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        @if ($manager->foto_manager)
+                            <div class="mt-2" id="fotoManagerPreview">
+                                <img src="{{ asset('storage/' . $manager->foto_manager) }}" alt="Preview Foto Manager" id="previewManagerImage" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                                <button type="button" class="btn btn-danger btn-sm mt-2" id="removeManagerImage">Hapus Foto</button>
                             </div>
-                        </div>
+                        @else
+                            <div class="mt-2" id="fotoManagerPreview" style="display: none;">
+                                <img src="#" alt="Preview Foto Manager" id="previewManagerImage" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                                <button type="button" class="btn btn-danger btn-sm mt-2" id="removeManagerImage">Hapus Foto</button>
+                            </div>
+                        @endif
                     </div>
-                        </div>
-
-                        <!-- Nama Manager -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">Nama Lengkap<span class="text-danger">*</span></label>
-                            <input type="text" 
-                                   name="nama_manager" 
-                                   class="form-control @error('nama_manager') is-invalid @enderror" 
-                                   value="{{ old('nama_manager', $manager->nama_manager) }}" 
-                                   required>
-                            @error('nama_manager')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
+                    {{-- Nama Manager --}}
+                    <div class="mb-3">
+                        <label for="nama_manager" class="form-label">Nama Manager</label>
+                        <input type="text" class="form-control @error('nama_manager') is-invalid @enderror" id="nama_manager" name="nama_manager" value="{{ old('nama_manager', $manager->nama_manager) }}">
+                        @error('nama_manager')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-
-                    <div class="row">
-                        <!-- Tanggal Lahir -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">Tanggal Lahir <span class="text-danger">*</span></label>
-                            <input type="date" 
-                                   name="tanggal_lahir" 
-                                   class="form-control @error('tanggal_lahir') is-invalid @enderror" 
-                                   value="{{ old('tanggal_lahir', $manager->tanggal_lahir) }}" 
-                                   required>
-                            @error('tanggal_lahir')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
+                    {{-- Tanggal Lahir --}}
+                    <div class="mb-3">
+                        <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
+                        <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir" name="tanggal_lahir" value="{{ old('tanggal_lahir', $manager->tanggal_lahir) }}">
+                        @error('tanggal_lahir')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-
-                    <div class="row">
-                        <!-- Jenis Kelamin -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">Jenis Kelamin <span class="text-danger">*</span></label>
-                            <select name="jenis_kelamin" class="form-select @error('jenis_kelamin') is-invalid @enderror" required>
-                                <option value="Pria" {{ old('jenis_kelamin', $manager->jenis_kelamin) == 'Pria' ? 'selected' : '' }}>Pria</option>
-                                <option value="Wanita" {{ old('jenis_kelamin', $manager->jenis_kelamin) == 'Wanita' ? 'selected' : '' }}>Wanita</option>
-                            </select>
-                            @error('jenis_kelamin')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
-
-                        <!-- Alamat -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">Alamat Lengkap <span class="text-danger">*</span></label>
-                            <textarea name="alamat" 
-                                  class="form-control @error('alamat_manager') is-invalid @enderror" 
-                                  rows="3" 
-                                  required>{{ old('alamat_manager', $manager->alamat_manager) }}</textarea>
-                            @error('alamat_manager')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                     </div>
-
-                        <!-- Pendidikan Terakhir -->
-                        <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">Pendidikan Terakhir <span class="text-danger">*</span></label>
-                            <input type="text" 
-                                   name="pendidikan_terakhir" 
-                                   class="form-control @error('pendidikan_terakhir') is-invalid @enderror" 
-                                   value="{{ old('pendidikan_terakhir', $manager->pendidikan_terakhir) }}" 
-                                   required>
-                            @error('pendidikan_terakhir')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                        </div>
+                    {{-- Jenis Kelamin --}}
+                    <div class="mb-3">
+                        <label for="jenis_kelamin" class="form-label">Jenis Kelamin</label>
+                        <select class="form-select @error('jenis_kelamin') is-invalid @enderror" id="jenis_kelamin" name="jenis_kelamin">
+                            <option value="">Pilih Jenis Kelamin</option>
+                            <option value="Pria" {{ old('jenis_kelamin', $manager->jenis_kelamin) == 'Pria' ? 'selected' : '' }}>Pria</option>
+                            <option value="Wanita" {{ old('jenis_kelamin', $manager->jenis_kelamin) == 'Wanita' ? 'selected' : '' }}>Wanita</option>
+                        </select>
+                        @error('jenis_kelamin')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-
-                    <!-- Tombol Aksi -->
-                    <div class="d-flex justify-content-between pt-2 border-top">
-                        <a href="{{ route('manager.index') }}" class="btn btn-light px-4">Batal</a>
-                        <button type="submit" class="btn btn-warning text-white px-4"><i class="bi bi-save me-1"></i> Perbarui Data</button>
+                    {{-- Alamat Manager --}}
+                    <div class="mb-3">
+                        <label for="alamat_manager" class="form-label">Alamat Manager</label>
+                        <textarea class="form-control @error('alamat_manager') is-invalid @enderror" id="alamat_manager" name="alamat_manager" rows="3">{{ old('alamat_manager', $manager->alamat_manager) }}</textarea>
+                        @error('alamat_manager')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    {{-- Pendidikan Terakhir --}}
+                    <div class="mb-3">
+                        <label for="pendidikan_terakhir" class="form-label">Pendidikan Terakhir</label>
+                        <input type="text" class="form-control @error('pendidikan_terakhir') is-invalid @enderror" id="pendidikan_terakhir" name="pendidikan_terakhir" value="{{ old('pendidikan_terakhir', $manager->pendidikan_terakhir) }}">
+                        @error('pendidikan_terakhir')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="{{ route('manager.index') }}" class="btn btn-secondary me-2">Batal</a>
+                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        function setupImagePreview(inputId, containerId, imageId, removeButtonId) {
+            const input = document.getElementById(inputId);
+            const container = document.getElementById(containerId);
+            const image = document.getElementById(imageId);
+            const removeButton = document.getElementById(removeButtonId);
+
+            if (!input || !container || !image || !removeButton) return;
+
+            input.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    image.src = URL.createObjectURL(file);
+                    container.style.display = 'block';
+                } else {
+                    resetPreview();
+                }
+            });
+
+            removeButton.addEventListener('click', function () {
+                resetPreview();
+            });
+
+            function resetPreview() {
+                input.value = '';
+                image.src = '#';
+                container.style.display = 'none';
+            }
+        }
+
+        setupImagePreview('foto_kopdes', 'fotoPreview', 'previewImage', 'removeImage');
+        setupImagePreview('foto_manager', 'fotoManagerPreview', 'previewManagerImage', 'removeManagerImage');
+    });
+</script>
 @endsection

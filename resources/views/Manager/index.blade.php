@@ -29,12 +29,10 @@
                         <tr>
                             <td>
                                 @if ($manager->foto_manager)
-                                    <img
-                                        src="{{ asset('storage/' . $manager->foto_manager) }}"
+                                    <img src="{{ $manager->foto_manager ? asset('storage/' . $manager->foto_manager) : asset('images/default-avatar.jpg') }}"
                                         alt="{{ $manager->nama_manager }}"
                                         class="club-image"
-                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
-                                        >
+                                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
                                 @else
                                     <div class="no-image">
                                         Tidak ada foto

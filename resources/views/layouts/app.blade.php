@@ -15,6 +15,15 @@
             text-decoration: underline;
             text-underline-offset: 5px;
         }
+
+        table td {
+            font-size: 17px;
+            color: #333;
+        }
+
+        table td strong, table td .fw-bold {
+            color: #000;
+        }
     </style>
 </head>
 
@@ -37,6 +46,14 @@
         </div>
     </nav>
 
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show m-3" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
     <main class="py-4">
         <div class="container">
             @yield('content')
@@ -44,7 +61,7 @@
     </main>
 
     <footer class="text-center py-4">
-        <p class="mb-0">&copy; {{ date('Y') }} Laravel App</p>
+        <p class="mb-0">&copy; {{ date('Y') }} Rizal Co.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

@@ -21,7 +21,7 @@ class Manager extends Model
         'pendidikan_terakhir',
     ];
 
-    public function Kopdes(): HasOne
+    public function kopdes(): HasOne
     {
         return $this->hasOne(Kopdes::class, 'manager_id', 'id');
     }

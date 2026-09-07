@@ -32,8 +32,8 @@
                                 <img
                                     src="{{ asset('storage/' . $item->foto_kopdes) }}"
                                     alt="{{ $item->nama_kopdes }}"
-                                    class="club-image"
-                                    style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
+                                    class="rectangle-image"
+                                    style="width: 160px; height: 90px; object-fit: cover; border-radius: 6px;"
                                     >
                                 @else
                                     <div class="no-image">
@@ -50,14 +50,14 @@
                                         src="{{ asset('storage/' . $item->manager->foto_manager) }}"
                                         alt="{{ $item->manager->nama_manager }}"
                                         class="club-image"
-                                        style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                                        style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
                                 @else
                                     <div class="no-image">
                                         Tidak ada foto
                                      </div>
                                 @endif
                             </td>
-                            <td>{{ $item->manager ? $item->manager->nama_manager : 'Tidak ada manager' }}</td>
+                            <td> @if ($item->manager) {{ $item->manager->nama_manager }} @else Tidak ada manager @endif </td>
                             <td class="text-center">
                                 <a href="{{ route('kopdes.edit', $item->id) }}" class="btn btn-sm btn-warning me-1">
                                     <i class="bi bi-pencil-square"></i> Edit

@@ -16,7 +16,7 @@ class ManagerSeeder extends Seeder
     {
         DB::table('manager')->insert([
             [
-                'foto_manager'          => 'managers/default.jpg',
+                'foto_manager'          => 'Seeder/rizz.jpg',
                 'nama_manager'          => 'Rizz Al',
                 'tanggal_lahir'         => '2001/11/9',
                 'jenis_kelamin'         => 'Pria',
@@ -24,7 +24,7 @@ class ManagerSeeder extends Seeder
                 'pendidikan_terakhir'   => 'S69 Streamer University',
             ],
             [
-                'foto_manager'          => 'managers/default.jpg',
+                'foto_manager'          => 'Seeder/hugh.png',
                 'nama_manager'          => 'Hugh Jass',
                 'tanggal_lahir'         => '1969/9/6',
                 'jenis_kelamin'         => 'Pria',
@@ -32,7 +32,7 @@ class ManagerSeeder extends Seeder
                 'pendidikan_terakhir'   => 'Waterloo University',
             ],
             [
-                'foto_manager'          => 'managers/default.jpg',
+                'foto_manager'          => 'Seeder/mona.jpg',
                 'nama_manager'          => 'Mona Lisa',
                 'tanggal_lahir'         => '1479/6/15',
                 'jenis_kelamin'         => 'Wanita',
@@ -40,7 +40,7 @@ class ManagerSeeder extends Seeder
                 'pendidikan_terakhir'   => 'IDK',
             ],  
             [
-                'foto_manager'          => 'managers/default.jpg',
+                'foto_manager'          => 'Seeder/john.jpg',
                 'nama_manager'          => 'John In Doe Knee Sya',
                 'tanggal_lahir'         => '1945/9/17',
                 'jenis_kelamin'         => 'Pria',
@@ -48,7 +48,7 @@ class ManagerSeeder extends Seeder
                 'pendidikan_terakhir'   => 'Somewhere',
             ],
             [
-                'foto_manager'          => 'managers/default.jpg',
+                'foto_manager'          => 'Seeder/jane.jpg',
                 'nama_manager'          => 'Jane Tea More lays They (without the "y" sound at the end)',
                 'tanggal_lahir'         => '2002/5/20',
                 'jenis_kelamin'         => 'Wanita',
