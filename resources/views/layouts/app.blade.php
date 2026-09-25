@@ -42,6 +42,9 @@
                 <a class="nav-link {{ request()->routeIs('kopdes.*') ? 'active-nav' : '' }}" href="{{ route('kopdes.index') }}">
                     <i class="bi bi-book-fill me-1"></i>Kopdes
                 </a>
+                <a class="btn btn-primary" href="{{ url('sesi/logout') }}">
+                    Logout
+                </a>
             </div>
         </div>
     </nav>
