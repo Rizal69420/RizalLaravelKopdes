@@ -20,13 +20,13 @@ class User extends Authenticatable
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<int, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    protected $table = 'users';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'name',
+        'username',
+        'password',
+    ];
 }
