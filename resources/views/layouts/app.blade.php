@@ -39,11 +39,14 @@
                 <a class="nav-link {{ request()->routeIs('manager.*') ? 'active-nav' : '' }}" href="{{ route('manager.index') }}">
                     <i class="bi bi-people-fill me-1"></i>Manager
                 </a>
+
                 <a class="nav-link {{ request()->routeIs('kopdes.*') ? 'active-nav' : '' }}" href="{{ route('kopdes.index') }}">
                     <i class="bi bi-book-fill me-1"></i>Kopdes
                 </a>
-                <a class="btn btn-primary" href="{{ url('sesi/logout') }}">
-                    Logout
+                
+                <!-- Updated Logout Link Triggering Bootstrap Modal -->
+                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                    <i class="bi bi-box-arrow-right me-1"></i>Log Out
                 </a>
             </div>
         </div>
@@ -56,7 +59,6 @@
         </div>
     @endif
 
-
     <main class="py-4">
         <div class="container">
             @yield('content')
@@ -66,6 +68,28 @@
     <footer class="text-center py-4">
         <p class="mb-0">&copy; {{ date('Y') }} Rizal Co.</p>
     </footer>
+
+    <!-- Logout Modal (Bootstrap 5) -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">gtfo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Yo you're leaving twin?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nah bruh</button>
+                    <form action="{{ url('sesi/logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">nga yes I do</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
