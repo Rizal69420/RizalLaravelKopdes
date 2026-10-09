@@ -18,7 +18,7 @@
 
         table td {
             font-size: 17px;
-            color: #333;
+            color: #0a0a0a;
         }
 
         table td strong, table td .fw-bold {
